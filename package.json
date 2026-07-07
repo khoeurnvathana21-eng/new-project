@@ -3,7 +3,8 @@
   "private": true,
   "version": "1.0.0",
   "scripts": {
-    "build": "npm install --prefix server",
+    "build": "npm install --prefix server --omit=dev",
     "start": "npm start --prefix server"
   }
 }
+
