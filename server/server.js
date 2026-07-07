@@ -49,6 +49,18 @@ app.use(cookieParser());
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // ============================================================
+// Root Route
+// ============================================================
+app.get('/', (req, res) => {
+  res.json({ 
+    status: 'ok', 
+    message: 'BootZone API is running', 
+    apiDocs: '/api/health',
+    timestamp: new Date().toISOString() 
+  });
+});
+
+// ============================================================
 // API Routes
 // ============================================================
 app.use('/api/auth', authRoutes);
@@ -85,3 +97,4 @@ app.listen(PORT, () => {
 });
 
 export default app;
+
