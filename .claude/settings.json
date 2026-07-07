@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm -v)",
+      "Bash(mysql --version)",
+      "Read(//c/Program Files/MySQL/**)",
+      "Read(//c/xampp/mysql/**)",
+      "Read(//c/Program Files/xampp/mysql/**)"
+    ]
+  }
+}

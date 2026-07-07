@@ -1,0 +1,89 @@
+/* ============================================================
+   BootZone Client - Tailwind CSS Entry
+   File: client/src/index.css
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Bebas+Neue&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-white text-ink-900 font-sans antialiased dark:bg-ink-950 dark:text-ink-100;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  ::selection {
+    @apply bg-flame-500 text-white;
+  }
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-ink-50 dark:bg-ink-900;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-ink-300 rounded-full dark:bg-ink-700;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-ink-400 dark:bg-ink-600;
+  }
+}
+
+@layer components {
+  .container-bz {
+    @apply mx-auto w-full max-w-8xl px-4 sm:px-6 lg:px-8;
+  }
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-ink-900 px-6 py-3 text-sm font-semibold text-white transition-all duration-200 hover:bg-flame-600 hover:shadow-cardHover focus:outline-none focus:ring-2 focus:ring-flame-500 focus:ring-offset-2 disabled:opacity-50 dark:bg-white dark:text-ink-900 dark:hover:bg-flame-600 dark:hover:text-white dark:focus:ring-offset-ink-950;
+  }
+  .btn-outline {
+    @apply inline-flex items-center justify-center gap-2 rounded-full border border-ink-300 bg-white px-6 py-3 text-sm font-semibold text-ink-900 transition-all duration-200 hover:border-ink-900 hover:bg-ink-900 hover:text-white focus:outline-none focus:ring-2 focus:ring-ink-900 focus:ring-offset-2 dark:border-ink-700 dark:bg-transparent dark:text-white dark:hover:border-white dark:hover:bg-white dark:hover:text-ink-900 dark:focus:ring-white dark:focus:ring-offset-ink-950;
+  }
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-4 py-2 text-sm font-medium text-ink-700 transition-colors hover:bg-ink-100 dark:text-ink-300 dark:hover:bg-ink-800;
+  }
+  .input-bz {
+    @apply w-full rounded-xl border border-ink-200 bg-white px-4 py-3 text-sm text-ink-900 placeholder-ink-400 transition-colors focus:border-ink-900 focus:outline-none focus:ring-2 focus:ring-ink-900/10 dark:border-ink-700 dark:bg-ink-900 dark:text-white dark:placeholder-ink-500 dark:focus:border-white dark:focus:ring-white/10;
+  }
+  .label-bz {
+    @apply mb-2 block text-xs font-semibold uppercase tracking-wider text-ink-600 dark:text-ink-400;
+  }
+  .card-bz {
+    @apply rounded-2xl border border-ink-100 bg-white shadow-card transition-all duration-300 dark:border-ink-800 dark:bg-ink-900;
+  }
+  .badge-bz {
+    @apply inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider;
+  }
+  .heading-display {
+    @apply font-display tracking-tight;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  .glass {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+  .dark .glass {
+    background: rgba(13, 15, 17, 0.8);
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
