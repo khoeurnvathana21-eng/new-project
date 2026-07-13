@@ -2,6 +2,7 @@
   "name": "bootzone",
   "private": true,
   "version": "1.0.0",
+  "type": "module",
   "scripts": {
     "build": "npm install --prefix server",
     "start": "npm start --prefix server"
