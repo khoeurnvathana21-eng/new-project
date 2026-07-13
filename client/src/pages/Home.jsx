@@ -225,7 +225,7 @@ const Home = () => {
             <img
               src="/images/nike-aurora-cropped.webp"
               alt="Nike Mercurial"
-              className="absolute bottom-6 right-4 hidden h-auto w-44 object-contain opacity-90 drop-shadow-2xl sm:block sm:w-56"
+              className="absolute bottom-2 right-2 h-auto w-28 object-contain opacity-90 drop-shadow-2xl sm:bottom-6 sm:right-4 sm:w-44 lg:w-56"
             />
           </div>
 
@@ -248,7 +248,7 @@ const Home = () => {
             <img
               src="/images/mizuno-morelia-cropped.webp"
               alt="Mizuno Morelia"
-              className="absolute bottom-6 right-4 hidden h-auto w-44 object-contain opacity-90 drop-shadow-2xl sm:block sm:w-56"
+              className="absolute bottom-2 right-2 h-auto w-28 object-contain opacity-90 drop-shadow-2xl sm:bottom-6 sm:right-4 sm:w-44 lg:w-56"
             />
           </div>
         </div>
