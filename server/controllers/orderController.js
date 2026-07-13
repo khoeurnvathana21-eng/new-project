@@ -165,8 +165,19 @@ export const getAllOrders = asyncHandler(async (req, res) => {
     [...params, limit, offset]
   );
 
+  const orderIds = rows.map((o) => o.id);
+  let itemsByOrder = {};
+  if (orderIds.length > 0) {
+    const [items] = await pool.query('SELECT * FROM order_items WHERE order_id IN (?)', [orderIds]);
+    itemsByOrder = items.reduce((acc, item) => {
+      (acc[item.order_id] ||= []).push(item);
+      return acc;
+    }, {});
+  }
+  const ordersWithItems = rows.map((o) => ({ ...o, items: itemsByOrder[o.id] || [] }));
+
   res.json({
-    orders: rows,
+    orders: ordersWithItems,
     pagination: { page, limit, total: countRows[0].total, totalPages: Math.ceil(countRows[0].total / limit) },
   });
 });
