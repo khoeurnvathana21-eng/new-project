@@ -66,7 +66,7 @@ const Home = () => {
           <img
             src="https://pbs.twimg.com/media/CxsbouKVQAAi_am.jpg"
             alt="Football pitch"
-            className="h-full w-full object-cover opacity-40"
+            className="h-full w-full object-contain object-right opacity-40 sm:object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-ink-950 via-ink-950/80 to-transparent" />
         </div>

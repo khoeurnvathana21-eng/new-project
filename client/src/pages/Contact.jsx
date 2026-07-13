@@ -61,7 +61,7 @@ const Contact = () => {
           <img
             src="https://images.unsplash.com/photo-1577223625816-7546f13df25d?w=1920&q=80"
             alt="Contact"
-            className="h-full w-full object-cover opacity-30"
+            className="h-full w-full object-contain opacity-30"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-ink-950 to-ink-950/70" />
         </div>

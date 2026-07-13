@@ -17,7 +17,7 @@ const About = () => {
         <img
           src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEge3c1YKHxN3ol-sQxixqVCKzgzb-S6fquFKR30_4TfxjdFdscc7o6ZZqsRA0P4ULijHHIY-0bGi29XpQwxLh3_A8r2-UCl87pblPDLX9qpvonnyhrmjiMjXB0obfDb5LjHsifDGeXb_Hg/s1600/Nike_Hypervenom-1308_original.jpg"
           alt="Football stadium"
-          className="absolute inset-0 h-full w-full object-cover object-center opacity-30"
+          className="absolute inset-0 h-full w-full object-contain object-center opacity-30"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-ink-950 via-ink-950/70 to-transparent" />
         <div className="container-bz relative">
