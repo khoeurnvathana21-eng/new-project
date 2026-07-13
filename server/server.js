@@ -79,9 +79,11 @@ app.use(errorHandler);
 // Start Server
 // ============================================================
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`🚀 BootZone server running on port ${PORT}`);
-  console.log(`📡 API: http://localhost:${PORT}/api`);
-});
+if (!process.env.VERCEL) {
+  app.listen(PORT, () => {
+    console.log(`🚀 BootZone server running on port ${PORT}`);
+    console.log(`📡 API: http://localhost:${PORT}/api`);
+  });
+}
 
 export default app;
