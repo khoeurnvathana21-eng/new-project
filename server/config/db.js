@@ -17,9 +17,14 @@ const pool = mysql.createPool({
   password: process.env.DB_PASSWORD || '',
   database: process.env.DB_NAME || 'bootzone',
   waitForConnections: true,
-  connectionLimit: 10,
+  // Serverless functions run many short-lived instances in parallel, each
+  // with its own pool — keep this low so they don't collectively exhaust
+  // the database's max connection limit.
+  connectionLimit: process.env.VERCEL ? 3 : 10,
   queueLimit: 0,
   dateStrings: true,
+  // Cloud MySQL providers (TiDB Cloud, Aiven, PlanetScale, etc.) require TLS.
+  ssl: process.env.DB_SSL === 'true' ? { rejectUnauthorized: true } : undefined,
 });
 
 // Test connection on boot
