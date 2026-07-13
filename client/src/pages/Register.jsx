@@ -13,6 +13,25 @@ import {
 import toast from 'react-hot-toast';
 import { useAuth } from '../context/AuthContext.jsx';
 
+const COUNTRY_CODES = [
+  { code: '+855', country: 'Cambodia', flag: '🇰🇭' },
+  { code: '+66', country: 'Thailand', flag: '🇹🇭' },
+  { code: '+84', country: 'Vietnam', flag: '🇻🇳' },
+  { code: '+856', country: 'Laos', flag: '🇱🇦' },
+  { code: '+95', country: 'Myanmar', flag: '🇲🇲' },
+  { code: '+65', country: 'Singapore', flag: '🇸🇬' },
+  { code: '+60', country: 'Malaysia', flag: '🇲🇾' },
+  { code: '+62', country: 'Indonesia', flag: '🇮🇩' },
+  { code: '+63', country: 'Philippines', flag: '🇵🇭' },
+  { code: '+86', country: 'China', flag: '🇨🇳' },
+  { code: '+82', country: 'South Korea', flag: '🇰🇷' },
+  { code: '+81', country: 'Japan', flag: '🇯🇵' },
+  { code: '+91', country: 'India', flag: '🇮🇳' },
+  { code: '+61', country: 'Australia', flag: '🇦🇺' },
+  { code: '+44', country: 'United Kingdom', flag: '🇬🇧' },
+  { code: '+1', country: 'United States', flag: '🇺🇸' },
+];
+
 const Register = () => {
   const { register: registerUser } = useAuth();
   const navigate = useNavigate();
@@ -30,7 +49,7 @@ const Register = () => {
         last_name: data.lastName,
         email: data.email,
         password: data.password,
-        phone: data.phone || undefined,
+        phone: data.phoneNumber ? `${data.countryCode}${data.phoneNumber}` : undefined,
       });
       toast.success(`Welcome to BootZone, ${user.first_name}!`);
       navigate('/');
@@ -133,12 +152,25 @@ const Register = () => {
 
             <div>
               <label className="label-bz">Phone (optional)</label>
-              <input
-                type="tel"
-                {...register('phone')}
-                placeholder="+1 (555) 000-0000"
-                className="input-bz"
-              />
+              <div className="flex gap-2">
+                <select
+                  {...register('countryCode')}
+                  defaultValue="+855"
+                  className="input-bz w-[104px] shrink-0 px-2"
+                >
+                  {COUNTRY_CODES.map((c) => (
+                    <option key={c.code + c.country} value={c.code}>
+                      {c.flag} {c.code}
+                    </option>
+                  ))}
+                </select>
+                <input
+                  type="tel"
+                  {...register('phoneNumber')}
+                  placeholder="12 345 678"
+                  className="input-bz flex-1"
+                />
+              </div>
             </div>
 
             <div>
