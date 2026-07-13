@@ -127,10 +127,6 @@ const Login = () => {
             </button>
           </form>
 
-          <div className="mt-6 rounded-2xl bg-ink-50 p-4 text-center text-xs text-ink-600 dark:bg-ink-900 dark:text-ink-400">
-            <span className="font-semibold text-ink-900 dark:text-white">Demo Admin:</span> admin@bootzone.com / admin123
-          </div>
-
           <p className="mt-6 text-center text-sm text-ink-600 dark:text-ink-400">
             New to BootZone?{' '}
             <Link to="/register" className="font-semibold text-flame-600 hover:underline">
