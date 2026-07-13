@@ -246,7 +246,7 @@ const Products = () => {
           </nav>
           <h1 className="font-display text-4xl tracking-tight text-ink-900 sm:text-5xl dark:text-white">
             {filters.brand
-              ? brands.find((b) => b.slug === filters.brand)?.name + ' Boots'
+              ? `${brands.find((b) => b.slug === filters.brand)?.name || filters.brand} Boots`
               : 'All Football Boots'}
           </h1>
           <p className="mt-2 text-sm text-ink-500 dark:text-ink-400">
