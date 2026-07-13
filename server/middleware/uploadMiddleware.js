@@ -10,11 +10,20 @@ import fs from 'fs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const uploadDir = path.join(__dirname, '..', 'uploads');
 
-// Ensure uploads directory exists
-if (!fs.existsSync(uploadDir)) {
-  fs.mkdirSync(uploadDir, { recursive: true });
+// Vercel's filesystem is read-only except /tmp, and /tmp doesn't persist
+// between invocations — use it there so uploads at least work per-request
+// instead of crashing the function on cold start.
+export const uploadDir = process.env.VERCEL
+  ? path.join('/tmp', 'uploads')
+  : path.join(__dirname, '..', 'uploads');
+
+try {
+  if (!fs.existsSync(uploadDir)) {
+    fs.mkdirSync(uploadDir, { recursive: true });
+  }
+} catch (err) {
+  console.error('Could not create uploads directory:', err.message);
 }
 
 // Disk storage with timestamped filenames
