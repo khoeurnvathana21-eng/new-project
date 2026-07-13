@@ -57,21 +57,27 @@ const About = () => {
             </h2>
             <div className="mt-6 space-y-4 text-sm leading-relaxed text-ink-600 dark:text-ink-400">
               <p>
-                In 2018, our founder Marcus was tired of choosing between overpriced
-                retail boots and risky online marketplaces flooded with counterfeits.
-                He knew there had to be a better way — a store run by people who
-                actually play, for people who actually play.
+                In 2025, our founder, Khoeurn Vathana, noticed how difficult it was
+                for football players to find authentic football boots at fair
+                prices. Many stores charged too much, while online marketplaces
+                were full of fake products and unreliable sellers. He believed
+                there should be a better option—a store created by someone who
+                truly understands the game and cares about every player.
               </p>
               <p>
-                So BootZone was born. We started with a single brand partnership and
-                a garage full of inventory. Today, we're proud authorized retailers
-                for Nike, Adidas, Puma, and Mizuno, shipping authentic boots to
-                players in over 40 countries.
+                That vision led to the creation of BootZone. What started as a
+                small business with a passion for football and a carefully
+                selected collection of genuine boots has grown into a trusted
+                destination for players looking for quality, authenticity, and
+                great service.
               </p>
               <p>
-                But our mission hasn't changed: make premium football boots
-                accessible, authentic, and a little more personal. Every order is
-                packed by hand, every customer question answered by a real player.
+                Our mission remains the same: to make premium football boots
+                accessible, authentic, and affordable. Every order is carefully
+                packed, every product is guaranteed genuine, and every customer is
+                treated with the respect and attention they deserve. At BootZone,
+                we're not just selling football boots—we're helping players
+                perform with confidence on every match day.
               </p>
             </div>
           </motion.div>
