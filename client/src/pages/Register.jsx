@@ -180,6 +180,7 @@ const Register = () => {
                   <FiUser className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-ink-400" />
                   <input
                     type="text"
+                    autoComplete="given-name"
                     {...register('firstName', { required: 'First name is required' })}
                     placeholder="John"
                     className="input-bz pl-12"
@@ -191,6 +192,7 @@ const Register = () => {
                 <label className="label-bz">Last Name</label>
                 <input
                   type="text"
+                  autoComplete="family-name"
                   {...register('lastName', { required: 'Last name is required' })}
                   placeholder="Doe"
                   className="input-bz"
@@ -205,6 +207,7 @@ const Register = () => {
                 <FiMail className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-ink-400" />
                 <input
                   type="email"
+                  autoComplete="email"
                   {...register('email', {
                     required: 'Email is required',
                     pattern: { value: /^\S+@\S+\.\S+$/, message: 'Enter a valid email' },
@@ -228,6 +231,7 @@ const Register = () => {
                 />
                 <input
                   type="tel"
+                  autoComplete="tel-national"
                   {...register('phoneNumber')}
                   placeholder="12 345 678"
                   className="input-bz flex-1"
@@ -241,6 +245,7 @@ const Register = () => {
                 <FiLock className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-ink-400" />
                 <input
                   type={showPassword ? 'text' : 'password'}
+                  autoComplete="new-password"
                   {...register('password', {
                     required: 'Password is required',
                     minLength: { value: 6, message: 'At least 6 characters' },

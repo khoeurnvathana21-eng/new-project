@@ -33,7 +33,14 @@ router.put('/password', protect, [
   body('newPassword').isLength({ min: 6 }).withMessage('New password must be at least 6 characters'),
 ], validate, changePassword);
 
-router.post('/forgot-password', forgotPassword);
-router.post('/reset-password', resetPassword);
+router.post('/forgot-password', [
+  body('email').isEmail().withMessage('Valid email is required'),
+], validate, forgotPassword);
+
+router.post('/reset-password', [
+  body('email').isEmail().withMessage('Valid email is required'),
+  body('code').isLength({ min: 6, max: 6 }).withMessage('Enter the 6-digit code'),
+  body('newPassword').isLength({ min: 6 }).withMessage('New password must be at least 6 characters'),
+], validate, resetPassword);
 
 export default router;

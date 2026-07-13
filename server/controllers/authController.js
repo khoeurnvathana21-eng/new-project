@@ -7,6 +7,16 @@ import bcrypt from 'bcrypt';
 import pool from '../config/db.js';
 import { generateToken, clearToken } from '../utils/generateToken.js';
 import { asyncHandler } from '../middleware/errorMiddleware.js';
+import { sendEmail } from '../utils/sendEmail.js';
+import { sendSms, smsEnabled } from '../utils/sendSms.js';
+
+const maskEmail = (email) => {
+  const [name, domain] = email.split('@');
+  const visible = name.slice(0, Math.min(2, name.length));
+  return `${visible}${'*'.repeat(Math.max(name.length - visible.length, 1))}@${domain}`;
+};
+
+const maskPhone = (phone) => `${'*'.repeat(Math.max(phone.length - 3, 0))}${phone.slice(-3)}`;
 
 // @desc    Register a new user
 // @route   POST /api/auth/register
@@ -113,37 +123,65 @@ export const changePassword = asyncHandler(async (req, res) => {
   res.json({ message: 'Password updated successfully' });
 });
 
-// @desc    Forgot password (request reset token)
+// @desc    Forgot password (send a 6-digit code via SMS or email)
 // @route   POST /api/auth/forgot-password
 // @access  Public
 export const forgotPassword = asyncHandler(async (req, res) => {
   const { email } = req.body;
-  const [rows] = await pool.query('SELECT id FROM users WHERE email = ?', [email]);
-  if (rows.length === 0) {
-    // Don't leak whether email exists
-    return res.json({ message: 'If the email exists, a reset link has been sent.' });
-  }
-  // Generate a simple reset token (in production use a secure random + email delivery)
-  const token = await bcrypt.hash(`${rows[0].id}-${Date.now()}`, 10);
+  const [rows] = await pool.query('SELECT id, email, phone FROM users WHERE email = ?', [email]);
+
+  // Don't leak whether the email exists
+  const genericResponse = { message: 'If the account exists, a reset code has been sent.' };
+  if (rows.length === 0) return res.json(genericResponse);
+
+  const user = rows[0];
+  const code = String(Math.floor(100000 + Math.random() * 900000));
+  const hashedCode = await bcrypt.hash(code, 10);
+
   await pool.query(
-    'UPDATE users SET reset_token = ?, reset_expires = DATE_ADD(NOW(), INTERVAL 1 HOUR) WHERE id = ?',
-    [token, rows[0].id]
+    'UPDATE users SET reset_token = ?, reset_expires = DATE_ADD(NOW(), INTERVAL 10 MINUTE) WHERE id = ?',
+    [hashedCode, user.id]
   );
-  res.json({ message: 'If the email exists, a reset link has been sent.', resetToken: token });
+
+  let channel = null;
+  if (user.phone && smsEnabled()) {
+    const sent = await sendSms({ to: user.phone, body: `Your BootZone verification code is ${code}. It expires in 10 minutes.` });
+    if (sent) channel = `sms:${maskPhone(user.phone)}`;
+  }
+  if (!channel) {
+    const sent = await sendEmail({
+      to: user.email,
+      subject: 'Your BootZone verification code',
+      html: `<p>Your verification code is <strong style="font-size:20px">${code}</strong>. It expires in 10 minutes.</p>`,
+    });
+    if (sent) channel = `email:${maskEmail(user.email)}`;
+  }
+
+  if (!channel) {
+    console.error('❌ Could not deliver reset code: no email or SMS channel configured');
+  }
+
+  res.json({ ...genericResponse, sentVia: channel });
 });
 
-// @desc    Reset password using token
+// @desc    Reset password using the 6-digit code
 // @route   POST /api/auth/reset-password
 // @access  Public
 export const resetPassword = asyncHandler(async (req, res) => {
-  const { token, newPassword } = req.body;
+  const { email, code, newPassword } = req.body;
   const [rows] = await pool.query(
-    'SELECT id FROM users WHERE reset_token = ? AND reset_expires > NOW()',
-    [token]
+    'SELECT id, reset_token FROM users WHERE email = ? AND reset_expires > NOW()',
+    [email]
   );
   if (rows.length === 0) {
-    return res.status(400).json({ message: 'Invalid or expired reset token' });
+    return res.status(400).json({ message: 'Invalid or expired code' });
   }
+
+  const match = await bcrypt.compare(code, rows[0].reset_token || '');
+  if (!match) {
+    return res.status(400).json({ message: 'Invalid or expired code' });
+  }
+
   const hashed = await bcrypt.hash(newPassword, 10);
   await pool.query(
     'UPDATE users SET password = ?, reset_token = NULL, reset_expires = NULL WHERE id = ?',

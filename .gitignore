@@ -6,8 +6,10 @@ dist/
 build/
 
 # Environment
+.env
 .env.local
 .env.production
+client/.env
 
 # Logs
 *.log

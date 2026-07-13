@@ -69,6 +69,7 @@ const Login = () => {
                 <FiMail className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-ink-400" />
                 <input
                   type="email"
+                  autoComplete="email"
                   {...register('email', {
                     required: 'Email is required',
                     pattern: { value: /^\S+@\S+\.\S+$/, message: 'Enter a valid email' },
@@ -91,6 +92,7 @@ const Login = () => {
                 <FiLock className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-ink-400" />
                 <input
                   type={showPassword ? 'text' : 'password'}
+                  autoComplete="current-password"
                   {...register('password', { required: 'Password is required' })}
                   placeholder="Your password"
                   className="input-bz pl-12 pr-12"
