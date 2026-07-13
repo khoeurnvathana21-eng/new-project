@@ -3,34 +3,98 @@
 // File: client/src/pages/Register.jsx
 // ============================================================
 
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useForm } from 'react-hook-form';
-import { motion } from 'framer-motion';
+import { useForm, Controller } from 'react-hook-form';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
-  FiUser, FiMail, FiLock, FiEye, FiEyeOff, FiArrowRight, FiCheck
+  FiUser, FiMail, FiLock, FiEye, FiEyeOff, FiArrowRight, FiCheck, FiChevronDown
 } from 'react-icons/fi';
 import toast from 'react-hot-toast';
 import { useAuth } from '../context/AuthContext.jsx';
 
 const COUNTRY_CODES = [
-  { code: '+855', country: 'Cambodia', flag: '🇰🇭' },
-  { code: '+66', country: 'Thailand', flag: '🇹🇭' },
-  { code: '+84', country: 'Vietnam', flag: '🇻🇳' },
-  { code: '+856', country: 'Laos', flag: '🇱🇦' },
-  { code: '+95', country: 'Myanmar', flag: '🇲🇲' },
-  { code: '+65', country: 'Singapore', flag: '🇸🇬' },
-  { code: '+60', country: 'Malaysia', flag: '🇲🇾' },
-  { code: '+62', country: 'Indonesia', flag: '🇮🇩' },
-  { code: '+63', country: 'Philippines', flag: '🇵🇭' },
-  { code: '+86', country: 'China', flag: '🇨🇳' },
-  { code: '+82', country: 'South Korea', flag: '🇰🇷' },
-  { code: '+81', country: 'Japan', flag: '🇯🇵' },
-  { code: '+91', country: 'India', flag: '🇮🇳' },
-  { code: '+61', country: 'Australia', flag: '🇦🇺' },
-  { code: '+44', country: 'United Kingdom', flag: '🇬🇧' },
-  { code: '+1', country: 'United States', flag: '🇺🇸' },
+  { code: '+855', iso: 'KH', country: 'Cambodia' },
+  { code: '+66', iso: 'TH', country: 'Thailand' },
+  { code: '+84', iso: 'VN', country: 'Vietnam' },
+  { code: '+856', iso: 'LA', country: 'Laos' },
+  { code: '+95', iso: 'MM', country: 'Myanmar' },
+  { code: '+65', iso: 'SG', country: 'Singapore' },
+  { code: '+60', iso: 'MY', country: 'Malaysia' },
+  { code: '+62', iso: 'ID', country: 'Indonesia' },
+  { code: '+63', iso: 'PH', country: 'Philippines' },
+  { code: '+86', iso: 'CN', country: 'China' },
+  { code: '+82', iso: 'KR', country: 'South Korea' },
+  { code: '+81', iso: 'JP', country: 'Japan' },
+  { code: '+91', iso: 'IN', country: 'India' },
+  { code: '+61', iso: 'AU', country: 'Australia' },
+  { code: '+44', iso: 'GB', country: 'United Kingdom' },
+  { code: '+1', iso: 'US', country: 'United States' },
 ];
+
+const CountryCodePicker = ({ value, onChange }) => {
+  const [open, setOpen] = useState(false);
+  const ref = useRef(null);
+  const selected = COUNTRY_CODES.find((c) => c.code === value) || COUNTRY_CODES[0];
+
+  useEffect(() => {
+    const onClickOutside = (e) => {
+      if (ref.current && !ref.current.contains(e.target)) setOpen(false);
+    };
+    document.addEventListener('mousedown', onClickOutside);
+    return () => document.removeEventListener('mousedown', onClickOutside);
+  }, []);
+
+  return (
+    <div className="relative shrink-0" ref={ref}>
+      <button
+        type="button"
+        onClick={() => setOpen((o) => !o)}
+        className="input-bz flex w-[118px] items-center gap-2 px-3"
+      >
+        <span className="flex h-5 w-7 items-center justify-center rounded bg-flame-500/15 text-[10px] font-bold tracking-wide text-flame-500">
+          {selected.iso}
+        </span>
+        <span className="text-sm font-medium text-ink-900 dark:text-white">{selected.code}</span>
+        <FiChevronDown className={`ml-auto h-4 w-4 text-ink-400 transition-transform ${open ? 'rotate-180' : ''}`} />
+      </button>
+
+      <AnimatePresence>
+        {open && (
+          <motion.ul
+            initial={{ opacity: 0, y: -6 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -6 }}
+            transition={{ duration: 0.15 }}
+            className="absolute left-0 top-full z-20 mt-2 max-h-64 w-64 overflow-y-auto rounded-2xl border border-ink-100 bg-white p-1.5 shadow-xl dark:border-ink-800 dark:bg-ink-900"
+          >
+            {COUNTRY_CODES.map((c) => (
+              <li key={c.code + c.country}>
+                <button
+                  type="button"
+                  onClick={() => {
+                    onChange(c.code);
+                    setOpen(false);
+                  }}
+                  className={`flex w-full items-center gap-3 rounded-xl px-3 py-2 text-left text-sm transition-colors hover:bg-ink-50 dark:hover:bg-ink-800 ${
+                    c.code === selected.code ? 'bg-ink-50 dark:bg-ink-800' : ''
+                  }`}
+                >
+                  <span className="flex h-5 w-7 items-center justify-center rounded bg-flame-500/15 text-[10px] font-bold tracking-wide text-flame-500">
+                    {c.iso}
+                  </span>
+                  <span className="flex-1 text-ink-700 dark:text-ink-300">{c.country}</span>
+                  <span className="font-medium text-ink-900 dark:text-white">{c.code}</span>
+                  {c.code === selected.code && <FiCheck className="h-4 w-4 text-flame-500" />}
+                </button>
+              </li>
+            ))}
+          </motion.ul>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+};
 
 const Register = () => {
   const { register: registerUser } = useAuth();
@@ -38,7 +102,9 @@ const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const { register, handleSubmit, watch, formState: { errors } } = useForm();
+  const { register, handleSubmit, watch, control, formState: { errors } } = useForm({
+    defaultValues: { countryCode: '+855' },
+  });
   const password = watch('password', '');
 
   const onSubmit = async (data) => {
@@ -153,17 +219,13 @@ const Register = () => {
             <div>
               <label className="label-bz">Phone (optional)</label>
               <div className="flex gap-2">
-                <select
-                  {...register('countryCode')}
-                  defaultValue="+855"
-                  className="input-bz w-[104px] shrink-0 px-2"
-                >
-                  {COUNTRY_CODES.map((c) => (
-                    <option key={c.code + c.country} value={c.code}>
-                      {c.flag} {c.code}
-                    </option>
-                  ))}
-                </select>
+                <Controller
+                  name="countryCode"
+                  control={control}
+                  render={({ field }) => (
+                    <CountryCodePicker value={field.value} onChange={field.onChange} />
+                  )}
+                />
                 <input
                   type="tel"
                   {...register('phoneNumber')}
