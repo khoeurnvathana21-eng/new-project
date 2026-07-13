@@ -1,4 +1,4 @@
-# ⚽ BootZone — Premium Football Boots E-Commerce
+#  BootZone — Premium Football Boots E-Commerce
 
 A production-ready, full-stack e-commerce application for premium football boots from **Nike**, **Adidas**, **Puma**, and **Mizuno**. Built with React, Vite, Node.js, Express, and MySQL.
 
@@ -6,7 +6,7 @@ A production-ready, full-stack e-commerce application for premium football boots
 
 ---
 
-## 📋 Table of Contents
+##  Table of Contents
 
 - [Overview](#overview)
 - [Tech Stack](#tech-stack)
@@ -21,13 +21,13 @@ A production-ready, full-stack e-commerce application for premium football boots
 
 ---
 
-## 🏪 Overview
+##  Overview
 
 BootZone is a premium online store that sells authentic football boots from only four legendary brands: Nike, Adidas, Puma, and Mizuno. The platform features a customer-facing storefront and a complete admin dashboard for managing products, orders, customers, and reviews.
 
 ---
 
-## 🛠 Tech Stack
+##  Tech Stack
 
 ### Frontend
 - **React.js 18** — UI library
@@ -53,7 +53,7 @@ BootZone is a premium online store that sells authentic football boots from only
 
 ---
 
-## 📁 Project Structure
+##  Project Structure
 
 ```
 bootzone/
@@ -168,7 +168,7 @@ bootzone/
 
 ---
 
-## ✨ Features
+##  Features
 
 ### Customer Storefront
 - **Home Page** — Hero banner, featured boots, shop by brand, new arrivals, best sellers, why choose us, customer reviews, newsletter
@@ -198,7 +198,7 @@ bootzone/
 
 ---
 
-## ✅ Prerequisites
+##  Prerequisites
 
 Before you begin, ensure you have installed:
 
@@ -208,7 +208,7 @@ Before you begin, ensure you have installed:
 
 ---
 
-## 🚀 Installation & Setup
+##  Installation & Setup
 
 ### Step 1: Clone or unzip the project
 
@@ -294,13 +294,13 @@ UPDATE users SET role='admin' WHERE email='your-email@example.com';
 
 ---
 
-## 🔑 Default Admin Credentials
+##  Default Admin Credentials
 
 After seeding the database, an admin account is created:
 
 ```
-Email:    admin@bootzone.com
-Password: admin123
+Email:    
+Password: 
 ```
 
 > **Note**: If the placeholder hash doesn't work, register a new account and run:
@@ -387,7 +387,7 @@ http://localhost:5000/api
 
 ---
 
-## 🎨 Design System
+##  Design System
 
 - **Colors**: `ink` (neutral grays), `flame` (orange accent), `pitch` (green accent)
 - **Typography**: Bebas Neue (display) + Inter (body)
@@ -397,7 +397,7 @@ http://localhost:5000/api
 
 ---
 
-## 📦 Available Scripts
+##  Available Scripts
 
 ### Client (`client/`)
 ```bash
@@ -415,16 +415,16 @@ npm run seed      # Re-seed database
 
 ---
 
-## 🌐 Promo Codes (for testing)
+##  Promo Codes (for testing)
 
 - `BOOT10` — 10% off your cart
 
 ---
 
-## 📝 License
+##  License
 
 MIT © BootZone. Built as a portfolio project.
 
 ---
 
-**Enjoy BootZone!** ⚽👟
+**Enjoy BootZone!** 
